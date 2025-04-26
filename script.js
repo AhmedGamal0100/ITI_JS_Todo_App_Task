@@ -73,12 +73,16 @@ function renderTodoList(title, description, Id) {
     let todoTextTile = document.createElement('p');
     todoTextTile.setAttribute("class", "todo-text-title");
     todoTextTile.innerHTML = title;
+    todoText.appendChild(todoTextTile);
+
+    let todoTextDescContainer = document.createElement('div');
+    todoTextDescContainer.setAttribute("class", "todo-text-desc-container");
+    todoItem.appendChild(todoTextDescContainer);
+    
     let todoTextDesc = document.createElement('p');
     todoTextDesc.setAttribute("class", "todo-text-Desc");
     todoTextDesc.innerHTML = description;
-
-    todoText.appendChild(todoTextTile);
-    todoText.appendChild(todoTextDesc);
+    todoTextDescContainer.appendChild(todoTextDesc);
 
     let checkButton = document.createElement('button');
     checkButton.setAttribute("class", "check-button");
