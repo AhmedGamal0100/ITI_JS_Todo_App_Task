@@ -177,13 +177,14 @@ function deleteElement(Id) {
     todoList = todoList.filter(todo => todo.id != Id);
     saveInLocalStorage(todoList);
     clearInputs()
-    clearSearchBarPerAction();
     todoSearchList = todoList;
     todoListToDisplay.innerHTML = "";
     todoList.forEach(element => {
         renderTodoList(element.title, element.description, element.id);
     });
+    clearSearchBarPerAction();
     searchPreview(todoSearchList);
+    disableAddButtonWhileSearching();
 }
 
 // Edit the element from the list
