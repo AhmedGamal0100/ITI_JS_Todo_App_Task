@@ -28,12 +28,30 @@ if (todoSearchList.length != 0) {
     checkedPreviewForAllElements(todoSearchList);
 }
 
+// Regex for Title & Description
+function regexChecker(input1, input2) {
+    isValidInput = false;
+    var regexTitleInput = /^[A-Z][a-z]{1,8}$/g;
+    var regexDescInput = /^(\w+\s?){1,20}$/gi;
+    var resTitle = regexTitleInput.test(`${input1}`);
+    var resDesc = regexDescInput.test(`${input2}`);
+    if (resTitle && resDesc) {
+        isValidInput = true;
+    }
+    else {
+        isValidInput = false;
+    }
+    return isValidInput;
+}
+
+
 // Add to the main list
 addBtn.addEventListener("click", function (e) {
     e.stopPropagation();
     inputTitleValue = inputTitle.value.trim();
     inputDescValue = inputDesc.value.trim();
-    if (inputTitleValue != "" || inputDescValue != "") {
+    let regex = regexChecker(inputTitleValue, inputDescValue);
+    if (regex) {
         todoList.push({
             id: idGenerator(),
             title: inputTitleValue,
@@ -47,7 +65,7 @@ addBtn.addEventListener("click", function (e) {
         saveInLocalStorage(todoList);
     }
     else {
-        alert("Please fill in the title or description.");
+        alert(`Please note that title must start with 1 capital character and up to 8 small characters & Description is up to 20 words!`);
     }
 });
 
@@ -78,7 +96,7 @@ function renderTodoList(title, description, Id) {
     let todoTextDescContainer = document.createElement('div');
     todoTextDescContainer.setAttribute("class", "todo-text-desc-container");
     todoItem.appendChild(todoTextDescContainer);
-    
+
     let todoTextDesc = document.createElement('p');
     todoTextDesc.setAttribute("class", "todo-text-Desc");
     todoTextDesc.innerHTML = description;
@@ -216,7 +234,8 @@ doneBtn.addEventListener("click", function (e) {
     e.stopPropagation();
     let inputTitleValue = inputTitle.value.trim();
     let inputDescValue = inputDesc.value.trim();
-    if (inputTitleValue != "" || inputDescValue != "") {
+    let regex = regexChecker(inputTitleValue, inputDescValue);
+    if (regex) {
         let todoToEdit = todoList.find(element => element.id == idToEdit);
         todoToEdit.title = inputTitleValue;
         todoToEdit.description = inputDescValue;
@@ -233,7 +252,7 @@ doneBtn.addEventListener("click", function (e) {
         checkedPreviewForAllElements(todoSearchList);
     }
     else {
-        alert("Please fill in the title or description.");
+        alert(`Please note that title must start with 1 capital character and up to 8 small characters & Description is up to 20 words!`);
     }
 })
 
